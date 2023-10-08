@@ -1,0 +1,142 @@
+\documentclass{beamer}
+\mode<presentation>{
+	\usetheme{Madrid}
+}
+
+\usepackage{graphicx}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{booktabs}
+
+\usepackage{tikz}
+\usepackage{amsmath}
+\usetikzlibrary{matrix}
+
+\title[University of Connecticut] {Applications of Hidden Markov Models in Biological Sequence Analysis}
+
+\author{Huyen D. Nguyen}
+
+\institute[]{University of Connecticut \\
+	\medskip
+	\text{Department of Statistics}\\
+}
+\date{November 06, 2023}
+
+\begin{document}
+\begin{frame}
+	\titlepage
+\end{frame}
+
+\begin{frame}{Introduction: Hidden Markove Model}
+	\begin{itemize}
+		\item A \textbf{hidden Markov Model (HMM)} is a statistical model in which can be used to describe the evolution of observable events that depend on a Markov process with unobservable states. 
+		\item Many real world problems deal with classifying raw observations into a number of categories or class labels that are more meaningful.
+		\item HMM applications in signal processing, pattern recognition, economics, finance, bioinformatics, etc.
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Introduction: Biological Sequence Analysis}
+	\begin{itemize}
+		\item The modeling approach of HMM is useful in modeling biological sequencess.
+		\item Example: Proteins generally consists of multiple domains. 
+		\begin{enumerate}
+			\item Predict the constituting domains (one or more hidden Markov states) and their location in amino acid sequences (observations).
+			\item Find the protein family that the a protein sequence belongs.
+		\end{enumerate}
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Outline}
+	\tableofcontents
+\end{frame}
+
+\section{Overview of Hidden Markov Model}
+\begin{frame}{HMM Definition}
+	\begin{itemize}
+		\item Observed symbols (events/states): $X_1, X_2, ..., X_L$.
+		\begin{itemize}
+			\item Each symbol $X_n$ can take on a value from the set $\textbf{O} = \{ O_1,..., O_N\}$.
+		\end{itemize}
+		\item Unobserved state: $Y_n, Y_2,...Y_L$.
+		\begin{itemize}
+			\item Each state $Y_i$ can take on a value from the set $\textbf{S} = \{S_1, S_2,...S_M\}$.
+		\end{itemize}
+		\item Transition probability $\pi_{ij}$: the probability of moving from state $i$ to $j$, $i,j \in \textbf{S}$
+		\begin{equation}
+			\begin{split}
+				\pi_{ij} & = P(Y_{n+1} = j \vert Y_n = i, Y_{n-1} = i_{n-1},\cdots, Y_1 = i_1) \\
+				& = P(Y_{n+1} = j \vert Y_n = i)
+			\end{split}
+		\end{equation}
+		\item Emission probability $e_i(x)$: the probability of observing $X_n = x$ when the hidden state is in state $i$, $x \in \textbf{O}$ and $i \in \textbf{S}$
+		\begin{equation}
+			\begin{split}
+				e_{i}(x) & = P(X_n = x \vert Y_n = i, Y_{n-1} = i_{n-1},\cdots, Y_1 = i_1) \\
+				& = P(X_n = x \vert Y_n = i) 
+			\end{split}
+		\end{equation}
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{HMM Definition}
+	\begin{figure}
+		\centering
+		\resizebox{3in}{!}{\begin{tikzpicture}
+				\matrix[matrix of math nodes,column sep=2em,row
+				sep=4em,cells={nodes={circle,draw,minimum width=3em,inner sep=0pt}},
+				column 1/.style={nodes={rectangle,draw=none}},
+				column 5/.style={nodes={rectangle,draw=none}},
+				ampersand replacement=\&] (m) {
+					\text{Markov process}: \&
+					Y_0 \& Y_1 \& Y_2 \& \cdots \& Y_{L}\\
+					\text{Observations}: \& 
+					X_0 \& X_1 \& X_2 \& \cdots \& X_{L}\\
+				};
+				\foreach \X in {2,3,4,5}
+				{\draw[-latex] (m-1-\X) -- (m-1-\the\numexpr\X+1) node[midway,above]{$\pi$};
+					\ifnum\X=5
+					\draw[-latex] (m-1-6) -- (m-2-6) node[pos=0.6,left]{$e$};
+					\else
+					\draw[-latex] (m-1-\X) -- (m-2-\X) node[pos=0.6,left]{$e$};
+					\fi}
+				\draw[dashed] ([yshift=1ex]m.east) -- ([yshift=1ex]m.east-|m-1-1.east);
+		\end{tikzpicture}}
+		\caption{An example of a hidden Markov model.}
+		\label{fig:HiddenMarkov}
+	\end{figure}
+\end{frame}
+\section{HMM to Solve the Decoding Problem}
+\begin{frame}{Decoding Problem: CG island example}
+	\begin{itemize}
+		\item In genome, the frequency of CG dinucleotide is relative low (about 1\% in human genome) because of methylation. 
+		\item The resulting methylated cytosine has the tendency to further deaminate into thymine.
+		\item However, mythelation is often suppressed around genes, particularly near transcriptional start sites.
+		\item These areas are called CG islands, where CG appears relatively frequently compared to the rest of the genome.
+		\item Identifying CG islands is useful in identifying different genes.
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{HMM for Decoding Problem}
+	\begin{itemize}
+		\item CG Island Decoding Problem: Given an RNA sequence, we want to identify the high CG content region and low CG content region
+		\item HMM for Decoding Problem: Given a symbol sequence \textbf{X}, find optimal state sequence or optimal path in the HMM that maximizes the observation probability of the given sequence.
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{HMM for Decoding Problem}
+	Toy Example
+	
+\end{frame} 
+\begin{frame}{Viberti Algorithm}
+	\begin{itemize}
+		\item Viberti Algorithm is a dynamical programming algorithm that computes the most probable path.
+	\end{itemize}
+\end{frame}
+
+\section{Profile HMM and Classifying Sequences}
+
+\begin{frame}{Classifying Sequences}
+	content...
+\end{frame}
+
+\end{document}
