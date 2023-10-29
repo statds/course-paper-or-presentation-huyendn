@@ -12,7 +12,7 @@
 \usepackage{amsmath}
 \usetikzlibrary{matrix}
 
-\title[University of Connecticut] {Applications of Hidden Markov Models in Biological Sequence Analysis}
+\title[University of Connecticut] {Hidden Markov Models in Biological Sequence Analysis}
 
 \author{Huyen D. Nguyen}
 
@@ -27,9 +27,9 @@
 	\titlepage
 \end{frame}
 
-\begin{frame}{Introduction: Hidden Markove Model}
+\begin{frame}{Introduction: Hidden Markov Model}
 	\begin{itemize}
-		\item A \textbf{hidden Markov Model (HMM)} is a statistical model in which can be used to describe the evolution of observable events that depend on a Markov process with unobservable states. 
+		\item A \textbf{hidden Markov Model (HMM)} is a statistical model that can be used to describe the evolution of observable events that depend on a Markov process with unobservable states. 
 		\item Many real world problems deal with classifying raw observations into a number of categories or class labels that are more meaningful.
 		\item HMM applications in signal processing, pattern recognition, economics, finance, bioinformatics, etc.
 	\end{itemize}
@@ -111,7 +111,8 @@
 		\label{fig:HiddenMarkov}
 	\end{figure}
 \end{frame}
-\section{HMM to Solve the Decoding Problem}
+\section{The Scoring Problem and the Forward Algorithm}
+\section{The Decoding Problem and the Viberti Algorithm}
 \begin{frame}{Decoding Problem: CG island example}
 	\begin{itemize}
 		\item In genome, the frequency of CG dinucleotide is relative low (about 1\% in human genome) because of methylation. 
@@ -163,10 +164,10 @@
 	\end{figure}
 \end{frame}
 
-\section{Profile HMM and Classifying Sequences}
-
+\section{The Training Problem and the Baum-Welch algorithm}
+\section{Extensions of HMM for Biological Sequence Analysis}
 \begin{frame}{References}
-	\bibliographystyle{abbrvnat}
+	\bibliographystyle{acm}
 	\bibliography{refs}
 \end{frame}
 
